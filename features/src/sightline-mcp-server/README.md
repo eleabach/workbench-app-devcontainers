@@ -1,4 +1,4 @@
-# Workbench MCP Server
+# Sightline MCP Server
 
 MCP server that exposes Workbench APIs for AI agents to discover data, explore schemas, and build cohorts programmatically.
 
@@ -9,7 +9,7 @@ Add to your `devcontainer.json`:
 ```json
 {
   "features": {
-    "ghcr.io/verily-src/workbench-app-devcontainers/wb-mcp-server:latest": {}
+    "ghcr.io/verily-src/workbench-app-devcontainers/sightline-mcp-server:latest": {}
   }
 }
 ```
@@ -21,13 +21,13 @@ Rebuild your devcontainer. The server installs at `/opt/wb-mcp-server/wb-mcp-ser
 ### With Claude CLI
 
 ```bash
-claude mcp add --transport stdio wb -- /opt/wb-mcp-server/wb-mcp-server
+claude mcp add --transport stdio sightline -- /opt/wb-mcp-server/wb-mcp-server
 ```
 
 ### With Gemini CLI
 
 ```bash
-gemini mcp add --scope user wb /opt/wb-mcp-server/wb-mcp-server
+gemini mcp add --scope user sightline /opt/wb-mcp-server/wb-mcp-server
 ```
 
 ## Quick Examples
