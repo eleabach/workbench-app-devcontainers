@@ -1,0 +1,13 @@
+city,state,plant_name,virus,level,most_recent_date
+San Diego,CA,North County WWTP,SARS-CoV-2,0.85,2026-02-10
+San Diego,CA,North County WWTP,Influenza A,0.42,2026-02-10
+San Diego,CA,North County WWTP,Norovirus,0.15,2026-02-09
+Los Angeles,CA,Hyperion WWTP,SARS-CoV-2,0.67,2026-02-11
+Los Angeles,CA,Hyperion WWTP,RSV,0.33,2026-02-11
+Portland,OR,Eastside Treatment Facility,Influenza A,0.58,2026-02-11
+Portland,OR,Eastside Treatment Facility,RSV,0.92,2026-02-11
+Austin,TX,Riverside WWTP,Norovirus,0.08,2026-02-12
+Austin,TX,Riverside WWTP,SARS-CoV-2,0.51,2026-02-12
+Austin,TX,Riverside WWTP,Influenza B,0.78,2026-02-11
+Chicago,IL,Metro Treatment Plant,SARS-CoV-2,0.0,2026-02-13
+Seattle,WA,Puget Sound WWTP,Influenza A,1.0,2026-02-12
