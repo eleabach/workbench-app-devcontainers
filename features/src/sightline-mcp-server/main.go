@@ -103,7 +103,8 @@ var tools = []Tool{
 // getPlantVirusData reads the CSV and returns virus data matching the query
 // Query searches across plant_name, city, and state fields
 func getPlantVirusData(query string) (string, error) {
-	file, err := os.Open("test.csv")
+	csvPath := "/opt/wb-mcp-server/test.csv"
+	file, err := os.Open(csvPath)
 	if err != nil {
 		return "", fmt.Errorf("failed to open CSV file: %v", err)
 	}

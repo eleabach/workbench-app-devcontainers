@@ -84,10 +84,14 @@ BUILD_DIR="${WORKDIR}/wb-mcp-server"
 mkdir -p "${BUILD_DIR}"
 cp "${FEATURE_DIR}/main.go" "${BUILD_DIR}/"
 cp "${FEATURE_DIR}/go.mod" "${BUILD_DIR}/"
+cp "${FEATURE_DIR}/test.csv" "${BUILD_DIR}/"
 
 # Build the Go binary
 cd "${BUILD_DIR}"
 go build -o "${WB_MCP_BIN}" main.go
+
+# Copy test.csv to installation directory
+cp "${BUILD_DIR}/test.csv" "${WB_MCP_DIR}/test.csv"
 
 # Make it executable
 chmod +x "${WB_MCP_BIN}"

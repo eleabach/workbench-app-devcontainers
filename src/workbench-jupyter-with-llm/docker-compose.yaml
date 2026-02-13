@@ -1,12 +1,7 @@
-include:
-  - ../jupyter-common/jupyter-common-compose.yaml
 services:
   app:
     container_name: "application-server"
-    build:
-      context: .
-      additional_contexts:
-        jupyter-extension-builder: service:jupyter-common-extension-builder
+    image: "jupyter/scipy-notebook"
     user: "jupyter"
     restart: always
     volumes:

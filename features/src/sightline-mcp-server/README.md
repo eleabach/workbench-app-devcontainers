@@ -1,6 +1,10 @@
 # Sightline MCP Server
 
-MCP server that exposes Workbench APIs for AI agents to discover data, explore schemas, and build cohorts programmatically.
+Mock MCP server that provides wastewater viral surveillance data for testing and development.
+
+## What It Does
+
+This is a test implementation that exposes viral activity data from wastewater treatment plants via the Model Context Protocol (MCP). It uses mock CSV data and requires no authentication or external dependencies.
 
 ## Installation
 
@@ -30,102 +34,95 @@ claude mcp add --transport stdio sightline -- /opt/wb-mcp-server/wb-mcp-server
 gemini mcp add --scope user sightline /opt/wb-mcp-server/wb-mcp-server
 ```
 
-## Quick Examples
+## Available Tool
 
-### Find Available Data
+### `get_plant_virus_data`
 
-```
-"List all data collections I can access"
-```
+Retrieves viral activity levels from wastewater surveillance at treatment plants.
 
-Uses `workspace_list_data_collections` to find data collection workspaces.
+**Parameters:**
+- `query` (string, required): Search term to filter results. Searches across plant name, city, or state (case-insensitive).
 
-### Explore Schema
+**Data Schema:**
+- `city`: City location
+- `state`: State location
+- `plant_name`: Wastewater treatment plant name
+- `virus`: Viral target (e.g., SARS-CoV-2, Influenza A, RSV, Norovirus)
+- `level`: Activity score (0-1 float) - represents proportion of recent measurements showing elevated activity
+  - `0` = normal activity OR insufficient historical data
+  - `1` = high anomalous activity detected
+- `most_recent_date`: Latest sample collection date
 
-```
-"What entities are in the AoU_2024 underlay? Show me the person entity attributes"
-```
+## Example Queries
 
-Uses `underlay_list_entities` and `underlay_get_entity`.
-
-### Create Simple Cohort
-
-```
-"Create a cohort called 'seniors' with patients over 65 from the AoU_2024 data collection (workspace ID: abc-123) in my workspace (xyz-456)"
-```
-
-Uses `filter_build_attribute` and `cohort_create_in_workspace`.
-
-### Create Complex Cohort
+### Search by City
 
 ```
-"Create a cohort of diabetic seniors: patients over 65 with Type 2 Diabetes (concept 201826) from AoU_2024. Data collection: abc-123, target workspace: xyz-456, name: 'diabetic-seniors'"
+"What viral activity is detected in San Diego wastewater?"
 ```
 
-Uses `filter_build_attribute`, `filter_build_relationship`, `filter_build_boolean_logic`, and `cohort_create_in_workspace`.
+Returns all virus data for San Diego treatment plants.
+
+### Search by State
+
+```
+"Show me wastewater surveillance data for California"
+```
+
+Returns data for all California plants (searches by state code "CA" or full name).
+
+### Search by Plant Name
+
+```
+"What viruses are detected at North County WWTP?"
+```
+
+Returns all viral activity for the specific treatment plant.
+
+### Search by Virus Type
+
+```
+"Show me SARS-CoV-2 levels across all plants"
+```
+
+Returns SARS-CoV-2 activity data from all treatment plants.
+
+## Mock Data
+
+The server uses static test data from `/opt/wb-mcp-server/test.csv` containing:
+- 6 cities across 5 states
+- 6 wastewater treatment plants
+- Detection of 5 viruses: SARS-CoV-2, Influenza A, Influenza B, RSV, Norovirus
+- Recent data (February 2026)
 
 ## How It Works
 
-### Authentication
-- Auto-fetches bearer token from `wb auth print-access-token`
-- Refreshes every 55 minutes
-- Gets API URLs from `wb status`
-
-### Data Collections
-Data collection workspaces contain underlays (data models):
-- Data collection workspace ID = underlay ID
-- Property `"terra-type": "data-collection"`
-- Property `"terra-dx-underlay-name"` = underlay name (e.g., "AoU_2024")
-
-### Cohort Creation Flow
-1. User has READ access to data collection workspace
-2. User has WRITER access to target workspace
-3. Server creates:
-   - Study in Data Explorer (if doesn't exist)
-   - Cohort in that study
-   - Controlled resource in workspace
-
-### Filter Structure
-Filters use Data Explorer's filter format:
-- **Attribute**: `age > 65`, `gender = 'male'`
-- **Relationship**: `persons who have condition = diabetes`
-- **Boolean Logic**: Combine with AND/OR/NOT
-- **Hierarchy**: All descendants of concept
-
-Filter builders output correct JSON for you.
+- **No authentication required** - This is a mock server for testing
+- **No external dependencies** - Reads from a local CSV file
+- **Simple search** - Case-insensitive substring matching across plant name, city, and state fields
 
 ## Troubleshooting
 
-### "Error: failed to get access token"
-```bash
-wb auth login
-```
-
-### "API error (403)"
-Check permissions:
-```bash
-wb workspace describe <workspace-id>
-```
-Need READER on data collections, WRITER on target workspace.
-
-### "Error: underlayName parameter is required"
-First find underlay names:
-```
-"List my data collections and show their underlay names"
-```
-
 ### Server not responding
-Test directly:
+
+Test the server directly:
 ```bash
 /opt/wb-mcp-server/wb-mcp-server
 ```
-Then send:
+
+Then send a test request:
 ```json
 {"jsonrpc":"2.0","id":1,"method":"tools/list"}
 ```
 
-## Requirements
+### "Failed to open CSV file" error
 
-- Workbench CLI (`wb`) installed
-- Authenticated (`wb auth login`)
-- Access to data collections and workspaces
+The server expects the CSV file at `/opt/wb-mcp-server/test.csv`. If it's missing, reinstall the devcontainer feature.
+
+## Technical Details
+
+- **Protocol**: Model Context Protocol (MCP) via stdio transport
+- **Language**: Go 1.21+
+- **Data format**: CSV with headers
+- **Server name**: `sightline-mcp-server`
+- **Version**: 1.0.0
