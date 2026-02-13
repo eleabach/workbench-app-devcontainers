@@ -48,9 +48,9 @@ Retrieves viral activity levels from wastewater surveillance at treatment plants
 - `state`: State location
 - `plant_name`: Wastewater treatment plant name
 - `virus`: Viral target (e.g., SARS-CoV-2, Influenza A, RSV, Norovirus)
-- `level`: Activity score (0-1 float) - represents proportion of recent measurements showing elevated activity
-  - `0` = normal activity OR insufficient historical data
-  - `1` = high anomalous activity detected
+- `level`: **BINARY** viral activity level
+  - **0 = NOT HIGH** (normal/baseline activity or insufficient data)
+  - **1 = HIGH** (elevated viral activity detected)
 - `most_recent_date`: Latest sample collection date
 
 ## Example Queries

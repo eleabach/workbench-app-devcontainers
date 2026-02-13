@@ -86,7 +86,7 @@ type ContentItem struct {
 var tools = []Tool{
 	{
 		Name:        "get_plant_virus_data",
-		Description: "Retrieve viral activity levels from wastewater surveillance. Searches across plant name, city, and state to return matching viral activity data.\n\nData Schema:\n- city, state: Location (may be null if metadata missing)\n- plant_name: Wastewater treatment plant name\n- virus: Viral target (e.g., SARS-CoV-2, Influenza A, RSV, Norovirus)\n- level: Activity score (0-1 float) - computed via sliding window anomaly detection comparing recent concentrations to plant-specific historical baseline. 0 = normal activity OR insufficient historical data (<36 samples), 1 = high anomalous activity detected\n- most_recent_date: Latest sample collection date\n\nThe level score represents the proportion of recent measurements showing elevated activity (>1 std dev above baseline). Higher scores indicate statistically significant increases in viral concentration vs historical patterns for that specific plant-virus pair.",
+		Description: "Retrieve viral activity levels from wastewater surveillance. Searches across plant name, city, and state to return matching viral activity data.\n\nData Schema:\n- city, state: Location (may be null if metadata missing)\n- plant_name: Wastewater treatment plant name\n- virus: Viral target (e.g., SARS-CoV-2, Influenza A, RSV, Norovirus)\n- level: BINARY viral activity level - 0 = NOT HIGH (normal/baseline), 1 = HIGH (elevated activity detected)\n- most_recent_date: Latest sample collection date\n\nThe level is a binary indicator: 0 means normal activity or insufficient data, 1 means high viral activity detected at this plant.",
 		InputSchema: InputSchema{
 			Type: "object",
 			Properties: map[string]interface{}{
