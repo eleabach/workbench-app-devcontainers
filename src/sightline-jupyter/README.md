@@ -24,7 +24,7 @@ Both Claude and Gemini CLI tools are pre-installed and configured with the Sight
 
 ### Sightline MCP Server
 
-The integrated MCP server provides the `get_plant_virus_data` tool for querying:
+The integrated MCP server provides the `get_wastewater_surveillance_data` tool for querying:
 - **BINARY** viral activity levels at wastewater treatment plants (0 = NOT HIGH, 1 = HIGH)
 - SARS-CoV-2, Influenza, RSV, and Norovirus detection data
 - Coverage across multiple US cities and states

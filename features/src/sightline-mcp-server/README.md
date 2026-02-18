@@ -36,9 +36,9 @@ gemini mcp add --scope user sightline /opt/wb-mcp-server/wb-mcp-server
 
 ## Available Tool
 
-### `get_plant_virus_data`
+### `get_wastewater_surveillance_data`
 
-Retrieves viral activity levels from wastewater surveillance at treatment plants.
+Retrieves viral activity levels from wastewater surveillance.
 
 **Parameters:**
 - `query` (string, required): Search term to filter results. Searches across plant name, city, or state (case-insensitive).

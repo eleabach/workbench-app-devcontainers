@@ -85,8 +85,8 @@ type ContentItem struct {
 // Tool definition
 var tools = []Tool{
 	{
-		Name:        "get_plant_virus_data",
-		Description: "Retrieve viral activity levels from wastewater surveillance. Searches across plant name, city, and state to return matching viral activity data.\n\nData Schema:\n- city, state: Location (may be null if metadata missing)\n- plant_name: Wastewater treatment plant name\n- virus: Viral target (e.g., SARS-CoV-2, Influenza A, RSV, Norovirus)\n- level: BINARY viral activity level - 0 = NOT HIGH (normal/baseline), 1 = HIGH (elevated activity detected)\n- most_recent_date: Latest sample collection date\n\nThe level is a binary indicator: 0 means normal activity or insufficient data, 1 means high viral activity detected at this plant.",
+		Name:        "get_wastewater_surveillance_data",
+		Description: "Retrieve viral activity levels from wastewater surveillance. Searches across plant name, city, and state to return matching viral activity data.\n\nData Schema:\n- city, state: Location (may be null if metadata missing)\n- plant_name: Wastewater treatment plant name\n- virus: Viral target (e.g., SARS-CoV-2, Influenza A, RSV, Norovirus)\n- level: BINARY viral activity level - 0 = NOT HIGH (normal/baseline), 1 = HIGH (elevated activity detected)\n- most_recent_date: Latest sample collection date\n\nThe level is a binary indicator: 0 means normal activity or insufficient data, 1 means high viral activity detected.",
 		InputSchema: InputSchema{
 			Type: "object",
 			Properties: map[string]interface{}{
@@ -100,9 +100,9 @@ var tools = []Tool{
 	},
 }
 
-// getPlantVirusData reads the CSV and returns virus data matching the query
+// getWastewaterSurveillanceData reads the CSV and returns virus data matching the query
 // Query searches across plant_name, city, and state fields
-func getPlantVirusData(query string) (string, error) {
+func getWastewaterSurveillanceData(query string) (string, error) {
 	csvPath := "/opt/wb-mcp-server/test.csv"
 	file, err := os.Open(csvPath)
 	if err != nil {
@@ -189,7 +189,7 @@ func getPlantVirusData(query string) (string, error) {
 // handleCallTool processes tool calls
 func handleCallTool(params CallToolParams) CallToolResult {
 	switch params.Name {
-	case "get_plant_virus_data":
+	case "get_wastewater_surveillance_data":
 		query, ok := params.Arguments["query"].(string)
 		if !ok {
 			return CallToolResult{
@@ -198,7 +198,7 @@ func handleCallTool(params CallToolParams) CallToolResult {
 			}
 		}
 
-		output, err := getPlantVirusData(query)
+		output, err := getWastewaterSurveillanceData(query)
 		if err != nil {
 			return CallToolResult{
 				Content: []ContentItem{{Type: "text", Text: fmt.Sprintf("Error: %v", err)}},

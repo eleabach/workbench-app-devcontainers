@@ -22,11 +22,11 @@ OUTPUT=$(
     (
         echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"test-client","version":"1.0"}}}'
         echo '{"jsonrpc":"2.0","id":2,"method":"tools/list"}'
-        echo '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"get_plant_virus_data","arguments":{"query":"North County WWTP"}}}'
-        echo '{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"get_plant_virus_data","arguments":{"query":"CA"}}}'
-        echo '{"jsonrpc":"2.0","id":5,"method":"tools/call","params":{"name":"get_plant_virus_data","arguments":{"query":"Los Angeles"}}}'
-        echo '{"jsonrpc":"2.0","id":6,"method":"tools/call","params":{"name":"get_plant_virus_data","arguments":{"query":"Eastside Treatment Facility"}}}'
-        echo '{"jsonrpc":"2.0","id":7,"method":"tools/call","params":{"name":"get_plant_virus_data","arguments":{"query":"Invalid Query"}}}'
+        echo '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"get_wastewater_surveillance_data","arguments":{"query":"North County WWTP"}}}'
+        echo '{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"get_wastewater_surveillance_data","arguments":{"query":"CA"}}}'
+        echo '{"jsonrpc":"2.0","id":5,"method":"tools/call","params":{"name":"get_wastewater_surveillance_data","arguments":{"query":"Los Angeles"}}}'
+        echo '{"jsonrpc":"2.0","id":6,"method":"tools/call","params":{"name":"get_wastewater_surveillance_data","arguments":{"query":"Eastside Treatment Facility"}}}'
+        echo '{"jsonrpc":"2.0","id":7,"method":"tools/call","params":{"name":"get_wastewater_surveillance_data","arguments":{"query":"Invalid Query"}}}'
     ) | ./sightline-mcp-server 2>/dev/null
 )
 
