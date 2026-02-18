@@ -151,6 +151,21 @@ if command -v gemini &> /dev/null; then
     su - "${USERNAME}" -c "gemini mcp add --scope user wb ${WB_MCP_BIN}" 2>/dev/null || true
 fi
 
+# Configure Claude Code settings
+echo "Configuring Claude Code settings..."
+mkdir -p "${USER_HOME_DIR}/.claude"
+cat > "${USER_HOME_DIR}/.claude/settings.json" <<'EOF'
+{
+  "env": {
+    "CLAUDE_CODE_USE_VERTEX": "1",
+    "CLOUD_ML_REGION": "us-east5",
+    "ANTHROPIC_VERTEX_PROJECT_ID": "shared-dev-ai-pct45x"
+  }
+}
+EOF
+chown "${USERNAME}:" "${USER_HOME_DIR}/.claude/settings.json"
+echo "Claude Code settings configured at ${USER_HOME_DIR}/.claude/settings.json"
+
 # Add environment variables and PATH to .bashrc
 {
     echo ""
